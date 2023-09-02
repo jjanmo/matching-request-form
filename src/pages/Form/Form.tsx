@@ -1,15 +1,30 @@
+import { RootState, useAppDispatch } from '@/store/root'
+import { fetchFormData } from '@/store/slice/formSlice'
+import { FormState, MatchingType } from '@/store/slice/formSlice.type'
 import { useEffect } from 'react'
+import { shallowEqual, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
 export default function Form() {
   const location = useLocation()
-  console.log(location)
+  const dispatch = useAppDispatch()
+  const form = useSelector<RootState, FormState['data']>((state) => state.form.data, shallowEqual)
+  const loading = useSelector<RootState, boolean>((state) => state.form.loading, shallowEqual)
 
   useEffect(() => {
-    fetch(`https://assets.cdn.soomgo.com/data/exam/mock/input_${location.pathname.slice(1)}.json`)
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-  }, [])
+    const type = location.pathname.slice(1) as MatchingType
+    dispatch(fetchFormData({ type }))
+  }, [dispatch, location.pathname])
 
-  return <div>{`This is Form page ${location.pathname}`}</div>
+  return (
+    <div>
+      {loading && <div>로딩중...</div>}
+
+      {!loading && form && (
+        <div>
+          <div>{form.title}</div>
+        </div>
+      )}
+    </div>
+  )
 }
