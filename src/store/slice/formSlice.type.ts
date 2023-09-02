@@ -1,11 +1,11 @@
 export type MatchingType = 'lesson' | 'clean'
 export type FormType = 'checkbox' | 'select'
 
-export interface Option {
+interface Option {
   id: number
   text: string
 }
-export interface Item {
+interface Item {
   formType: FormType
   itemId: number
   options: Option[]
