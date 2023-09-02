@@ -1,4 +1,4 @@
-import Card, { CardType } from '@/components/Card'
+import Card, { CardType } from '@components/Card'
 import * as S from './Home.style'
 
 export default function Home() {

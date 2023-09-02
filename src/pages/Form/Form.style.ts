@@ -28,4 +28,8 @@ export const Title = styled.h2`
   font-size: 2.4rem;
   font-weight: 500;
 `
-export const ButtonContainer = styled.div``
+export const ButtonContainer = styled.div`
+  margin-top: 5rem;
+  display: flex;
+  justify-content: flex-end;
+`
