@@ -5,7 +5,7 @@ interface Option {
   id: number
   text: string
 }
-interface Item {
+export interface Item {
   formType: FormType
   itemId: number
   options: Option[]
