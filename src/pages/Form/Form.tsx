@@ -15,6 +15,12 @@ export default function Form() {
   const form = useSelector<RootState, FormState['data']>((state) => state.form.data, shallowEqual)
   const loading = useSelector<RootState, boolean>((state) => state.form.loading, shallowEqual)
 
+  const location = useLocation()
+  useEffect(() => {
+    const type = location.pathname.slice(1) as MatchingType
+    dispatch(fetchFormData(type))
+  }, [dispatch, location.pathname])
+
   useEffect(() => {
     if (form) {
       const formId = form.formId
@@ -22,12 +28,6 @@ export default function Form() {
       dispatch(resultActions.initializeResult({ formId, itemIds }))
     }
   }, [dispatch, form])
-
-  const location = useLocation()
-  useEffect(() => {
-    const type = location.pathname.slice(1) as MatchingType
-    dispatch(fetchFormData(type))
-  }, [dispatch, location.pathname])
 
   const [currentItem, setCurrentItem] = useState<CurrentItem>()
   const currentItemIndex = useSelector<RootState, number>((state) => state.result.currentItem, shallowEqual)
@@ -57,8 +57,8 @@ export default function Form() {
         <S.ContentWrapper>
           <S.Title> {form.title}</S.Title>
 
-          {currentItem?.formType === 'select' && <InputForm.SelectForm {...currentItem} />}
-          {currentItem?.formType === 'checkbox' && <InputForm.CheckboxForm {...currentItem} />}
+          {currentItem?.formType === 'select' && <InputForm.SelectForm key={currentItem.itemId} {...currentItem} />}
+          {currentItem?.formType === 'checkbox' && <InputForm.CheckboxForm key={currentItem.itemId} {...currentItem} />}
 
           <S.ButtonContainer>
             {currentItemIndex !== 0 && <Button onClick={handleClickPrev} text="이전" variant="outline" />}
