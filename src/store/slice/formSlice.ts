@@ -7,12 +7,8 @@ const initialState: FormState = {
   data: null,
 }
 
-export const fetchFormData = createAsyncThunk<FormDataType, { type: MatchingType }>(
-  '@form/fetchFormData',
-  async ({ type }) => {
-    const data = API.get(`/data/exam/mock/input_${type}.json`).then((res) => res.data)
-    return data
-  }
+export const fetchFormData = createAsyncThunk<FormDataType, MatchingType>('@form/fetchFormData', async (type) =>
+  API.get(`/data/exam/mock/input_${type}.json`).then((res) => res.data)
 )
 
 const slice = createSlice({
