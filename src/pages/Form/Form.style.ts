@@ -23,7 +23,7 @@ export const SpinnerWrapper = styled(ContentWrapper)`
   align-items: center;
 `
 export const Title = styled.h2`
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
   text-align: center;
   font-size: 2.4rem;
   font-weight: 500;
