@@ -1,22 +1,6 @@
-import { colors } from '@styles/theme'
+import { ContentWrapper } from '@pages/common.style'
 import styled from 'styled-components'
 
-export const Container = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${colors.black};
-`
-export const ContentWrapper = styled.div`
-  width: 56rem;
-  padding: 4rem;
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-  border: 1px solid ${colors.gray03};
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-`
 export const SpinnerWrapper = styled(ContentWrapper)`
   justify-content: center;
   align-items: center;

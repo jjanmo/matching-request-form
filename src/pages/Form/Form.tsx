@@ -9,6 +9,7 @@ import useIsValid from '@hooks/useIsValid'
 import Spinner from '@components/Icons/Spinner'
 import InputForm from '@components/InputForm'
 import Button from '@components/Button'
+import * as CS from '../common.style'
 import * as S from './Form.style'
 
 export default function Form() {
@@ -50,7 +51,7 @@ export default function Form() {
   }
 
   return (
-    <S.Container>
+    <CS.Container>
       {loading && (
         <S.SpinnerWrapper>
           <Spinner size={60} />
@@ -58,7 +59,7 @@ export default function Form() {
       )}
 
       {!loading && formData && (
-        <S.ContentWrapper>
+        <CS.ContentWrapper>
           <S.Title>{formData.title}</S.Title>
 
           {currentItem?.formType === 'select' && <InputForm.SelectForm key={currentItem.itemId} {...currentItem} />}
@@ -72,8 +73,8 @@ export default function Form() {
               variant="fill"
             />
           </S.ButtonContainer>
-        </S.ContentWrapper>
+        </CS.ContentWrapper>
       )}
-    </S.Container>
+    </CS.Container>
   )
 }
