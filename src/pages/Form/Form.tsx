@@ -33,7 +33,7 @@ export default function Form() {
     dispatch(resultActions.updateCurrentItem({ direction: 'prev' }))
   }
   const handleClickNext = () => {
-    if (!isValid) return alert('값을 입력해 주세요.')
+    if (!isValid) return alert('옵션을 선택해주세요')
     if (isLast && isAllValid) return navigate('/result')
 
     dispatch(resultActions.updateCurrentItem({ direction: 'next' }))
