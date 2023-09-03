@@ -1,47 +1,51 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { shallowEqual, useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '@store/root'
 import { fetchFormData } from '@store/slice/formSlice'
-import { FormState, MatchingType, Item as CurrentItem } from '@store/slice/formSlice.type'
+import { MatchingType, Item as CurrentItem, FormDataType } from '@store/slice/formSlice.type'
 import { resultActions } from '@store/slice/resultSlice'
+import useIsValid from '@hooks/useIsValid'
 import Spinner from '@components/Icons/Spinner'
 import InputForm from '@components/InputForm'
-import * as S from './Form.style'
 import Button from '@components/Button'
+import * as S from './Form.style'
 
 export default function Form() {
-  const dispatch = useAppDispatch()
-  const form = useSelector<RootState, FormState['data']>((state) => state.form.data, shallowEqual)
-  const loading = useSelector<RootState, boolean>((state) => state.form.loading, shallowEqual)
-
   const location = useLocation()
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const formData = useSelector<RootState, FormDataType | undefined>((state) => state.form.data, shallowEqual)
+  const loading = useSelector<RootState, boolean>((state) => state.form.loading, shallowEqual)
+  const currentItemIndex = useSelector<RootState, number>((state) => state.result.currentItem, shallowEqual)
+  const { isValid, isAllValid } = useIsValid()
+  const [currentItem, setCurrentItem] = useState<CurrentItem>()
+
   useEffect(() => {
     const type = location.pathname.slice(1) as MatchingType
     dispatch(fetchFormData(type))
   }, [dispatch, location.pathname])
 
   useEffect(() => {
-    if (form) {
-      const formId = form.formId
-      const itemIds = form.items.map((item) => item.itemId)
+    if (formData) {
+      const formId = formData.formId
+      const itemIds = formData.items.map((item) => item.itemId)
       dispatch(resultActions.initializeResult({ formId, itemIds }))
     }
-  }, [dispatch, form])
+  }, [dispatch, formData])
 
-  const [currentItem, setCurrentItem] = useState<CurrentItem>()
-  const currentItemIndex = useSelector<RootState, number>((state) => state.result.currentItem, shallowEqual)
   useEffect(() => {
-    setCurrentItem(form?.items[currentItemIndex])
-  }, [form, currentItemIndex])
+    setCurrentItem(formData?.items[currentItemIndex])
+  }, [formData, currentItemIndex])
 
   const handleClickPrev = () => {
     dispatch(resultActions.updateCurrentItem({ direction: 'prev' }))
   }
   const handleClickNext = () => {
-    // TODO
-    // 1) 유효성 검사 : 선택안했을때 alert
-    // 2) 제출하기는 다른 로직 : 페이지 이동
+    if (!isValid) return alert('값을 입력해 주세요.')
+    if (formData && currentItemIndex === formData.items.length - 1 && isAllValid) return navigate('/result')
+
     dispatch(resultActions.updateCurrentItem({ direction: 'next' }))
   }
 
@@ -53,9 +57,9 @@ export default function Form() {
         </S.SpinnerWrapper>
       )}
 
-      {!loading && form && (
+      {!loading && formData && (
         <S.ContentWrapper>
-          <S.Title> {form.title}</S.Title>
+          <S.Title>{formData.title}</S.Title>
 
           {currentItem?.formType === 'select' && <InputForm.SelectForm key={currentItem.itemId} {...currentItem} />}
           {currentItem?.formType === 'checkbox' && <InputForm.CheckboxForm key={currentItem.itemId} {...currentItem} />}
@@ -64,7 +68,7 @@ export default function Form() {
             {currentItemIndex !== 0 && <Button onClick={handleClickPrev} text="이전" variant="outline" />}
             <Button
               onClick={handleClickNext}
-              text={currentItemIndex === form.items.length - 1 ? '제출하기' : '다음'}
+              text={currentItemIndex === formData.items.length - 1 ? '제출하기' : '다음'}
               variant="fill"
             />
           </S.ButtonContainer>

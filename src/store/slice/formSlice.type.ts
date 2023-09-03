@@ -19,5 +19,5 @@ export interface FormDataType {
 
 export interface FormState {
   loading: boolean
-  data: FormDataType | null
+  data?: FormDataType
 }

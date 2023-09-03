@@ -35,10 +35,6 @@ const slice = createSlice({
       state.formId = null
       state.items = {}
     },
-    // 현재 위치 수정
-    // 응답 수정 -> input form을 변경할 때 마다 바로 바로 반영 => onChange로 반영
-    // 최종 제출
-    // 리셋 결과값 -> 결과페이지를 떠날 때
   },
 })
 

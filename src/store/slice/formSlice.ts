@@ -4,7 +4,6 @@ import { API } from '../ajax'
 
 const initialState: FormState = {
   loading: false,
-  data: null,
 }
 
 export const fetchFormData = createAsyncThunk<FormDataType, MatchingType>('@form/fetchFormData', async (type) =>
