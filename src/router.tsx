@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { Home, Form } from './pages'
+import { Home, Form, Result } from './pages'
 
 export const router = createBrowserRouter([
   {
@@ -13,5 +13,9 @@ export const router = createBrowserRouter([
   {
     path: '/lesson',
     element: <Form />,
+  },
+  {
+    path: '/result',
+    element: <Result />,
   },
 ])
