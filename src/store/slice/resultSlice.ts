@@ -18,12 +18,17 @@ const slice = createSlice({
     updateCurrentItem: (state, action: PayloadAction<PayloadCurrentItem>) => {
       state.currentItem += action.payload.direction === 'next' ? 1 : -1
     },
-    changeResultItem: (state, action: PayloadAction<PayloadResultItem>) => {
+    changeCheckboxItem: (state, action: PayloadAction<PayloadResultItem>) => {
       const { itemId, optionId } = action.payload
       const selectedOptions = state.items[itemId]
       const finded = selectedOptions.indexOf(optionId)
+
       if (finded === -1) selectedOptions.push(optionId)
       else selectedOptions.splice(finded, 1)
+    },
+    changeSelectItem: (state, action: PayloadAction<PayloadResultItem>) => {
+      const { itemId, optionId } = action.payload
+      state.items[itemId] = [optionId]
     },
     resetResult: (state) => {
       state.currentItem = 0
