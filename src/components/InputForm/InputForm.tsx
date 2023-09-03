@@ -1,14 +1,26 @@
-import { Item } from '@store/slice/formSlice.type'
-import * as S from './InputForm.style'
+import { useState } from 'react'
+import { Item as ResultItem } from '@store/slice/formSlice.type'
 import { useAppDispatch } from '@store/root'
 import { resultActions } from '@store/slice/resultSlice'
+import CheckIcon from '@components/Icons/Check'
+import * as S from './InputForm.style'
 
-function CheckboxForm({ title, options, itemId }: Item) {
+interface CheckedArray {
+  [key: number]: boolean
+}
+
+function CheckboxForm({ title, options, itemId }: ResultItem) {
   const dispatch = useAppDispatch()
-
+  const initializedArray = options.reduce((acc, cur) => ({ ...acc, [cur.id]: false }), {})
+  const [checkedArray, setCheckedArray] = useState<CheckedArray>(initializedArray)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id } = e.target
+    const { id, checked } = e.target
     dispatch(resultActions.changeResultItem({ itemId, optionId: Number(id) }))
+
+    setCheckedArray((prev) => ({
+      ...prev,
+      [id]: checked,
+    }))
   }
 
   return (
@@ -16,8 +28,10 @@ function CheckboxForm({ title, options, itemId }: Item) {
       <S.Question>{title}</S.Question>
       <S.OptionsContainer>
         {options.map((option) => (
-          <label key={option.id} htmlFor={String(option.id)}>
-            <S.Checkbox />
+          <S.Label key={option.id} htmlFor={String(option.id)} checked={checkedArray[option.id]}>
+            <S.Checkbox checked={checkedArray[option.id]}>
+              <CheckIcon size={25} />
+            </S.Checkbox>
             <input
               id={String(option.id)}
               type="checkbox"
@@ -26,14 +40,14 @@ function CheckboxForm({ title, options, itemId }: Item) {
               onChange={handleChange}
             />
             {option.text}
-          </label>
+          </S.Label>
         ))}
       </S.OptionsContainer>
     </S.Container>
   )
 }
 
-function SelectForm({ title, options }: Item) {
+function SelectForm({ title, options }: ResultItem) {
   return (
     <S.Container>
       <S.Question>{title}</S.Question>

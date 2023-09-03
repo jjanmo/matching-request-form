@@ -10,7 +10,6 @@ export const Container = styled.div`
 `
 export const ContentWrapper = styled.div`
   width: 56rem;
-  height: 64rem;
   padding: 4rem;
   display: flex;
   flex-direction: column;
@@ -29,7 +28,6 @@ export const Title = styled.h2`
   font-weight: 500;
 `
 export const ButtonContainer = styled.div`
-  margin-top: 5rem;
   display: flex;
   justify-content: flex-end;
 `
