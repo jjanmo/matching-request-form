@@ -1,24 +1,29 @@
 import { shallowEqual, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { RootState } from '@store/root'
 import { FormDataType } from '@store/slice/formSlice.type'
 import { ResultDataType } from '@store/slice/resultSlice.type'
+import useDownload from '@hooks/useDownload'
 import HomeIcon from '@components/Icons/Home'
 import DownloadIcon from '@components/Icons/Download'
+import { IconButton } from '@components/Buttons'
 import { colors } from '@styles/theme'
 import * as CS from '../common.style'
 import * as S from './Result.style'
-import { IconButton } from '@components/Buttons'
-import { useNavigate } from 'react-router-dom'
 
 export default function Result() {
   const navigate = useNavigate()
   const formData = useSelector<RootState, FormDataType | undefined>((state) => state.form.data)
   const resultData = useSelector<RootState, ResultDataType>((state) => state.result.data, shallowEqual)
 
+  const { saveToData } = useDownload()
+
   const handleClickHome = () => {
     navigate('/')
   }
-  const handleClickDownload = () => {}
+  const handleClickDownload = () => {
+    saveToData()
+  }
 
   if (!formData || !resultData) {
     return (
