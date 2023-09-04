@@ -8,7 +8,7 @@ import { resultActions } from '@store/slice/resultSlice'
 import useValid from '@hooks/useValid'
 import useWatch from '@hooks/useWatch'
 import Spinner from '@components/Icons/Spinner'
-import InputForm from '@components/InputForm'
+import { CheckboxForm, SelectForm } from '@components/InputForm'
 import Button from '@components/Button'
 import * as CS from '../common.style'
 import * as S from './Form.style'
@@ -51,8 +51,8 @@ export default function Form() {
         <CS.ContentWrapper>
           <S.Title>{formTitle}</S.Title>
 
-          {currentItem?.formType === 'select' && <InputForm.SelectForm key={currentItem.itemId} {...currentItem} />}
-          {currentItem?.formType === 'checkbox' && <InputForm.CheckboxForm key={currentItem.itemId} {...currentItem} />}
+          {currentItem?.formType === 'select' && <SelectForm key={currentItem.itemId} {...currentItem} />}
+          {currentItem?.formType === 'checkbox' && <CheckboxForm key={currentItem.itemId} {...currentItem} />}
 
           <S.ButtonContainer>
             {!isFirst && <Button onClick={handleClickPrev} text="이전" variant="outline" />}

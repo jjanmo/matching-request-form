@@ -1,1 +1,2 @@
-export { default } from './InputForm'
+export { default as CheckboxForm } from './CheckboxForm'
+export { default as SelectForm } from './SelectForm'
