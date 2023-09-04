@@ -2,6 +2,8 @@ import { shallowEqual, useSelector } from 'react-redux'
 import { RootState } from '@store/root'
 import { FormDataType } from '@store/slice/formSlice.type'
 import { ResultDataType } from '@store/slice/resultSlice.type'
+import HomeIcon from '@components/Icons/Home'
+import { colors } from '@styles/theme'
 import * as CS from '../common.style'
 import * as S from './Result.style'
 
@@ -13,7 +15,7 @@ export default function Result() {
     return (
       <CS.Container>
         <S.EmptyWrapper>
-          <S.EmptyNotice>매칭 요청서를 먼저 작성해주세요!</S.EmptyNotice>
+          <S.EmptyNotice>견적 요청서를 먼저 작성해주세요!</S.EmptyNotice>
           <S.HomeLink to="/">홈으로 가기</S.HomeLink>
         </S.EmptyWrapper>
       </CS.Container>
@@ -23,11 +25,13 @@ export default function Result() {
   return (
     <CS.Container>
       <CS.ContentWrapper>
-        <S.HomeButton to="/">홈</S.HomeButton>
+        <S.HomeButton to="/">
+          <HomeIcon size={20} fillColor={colors.green01} strokeColor={colors.green01} />
+        </S.HomeButton>
 
         <S.Title>
           <span>{formData?.title.slice(0, -2)}</span>
-          <span className="form-id">({resultData?.formId})</span>
+          <span className="form-id">(폼아이디 : {resultData?.formId})</span>
         </S.Title>
 
         {formData?.items.map((item, index) => (

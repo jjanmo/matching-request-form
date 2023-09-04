@@ -30,16 +30,19 @@ export const HomeButton = styled(HomeLink)`
   top: 2rem;
   right: 2rem;
   width: fit-content;
-  padding: 0.4rem 1rem;
+  padding: 0.2rem 0.6rem;
   font-size: 1.6rem;
   font-weight: 500;
   color: ${colors.green01};
   border-color: ${colors.green01};
-  transition: 0.3s;
+  border-width: 2px;
+  transition: 0.2s;
 
   &:hover {
-    opacity: 0.8;
-    border-radius: 50%;
+    opacity: 0.7;
+  }
+  & svg {
+    transform: translateY(1px); // 미세조정
   }
 `
 
@@ -50,7 +53,7 @@ export const Title = styled.h1`
 
   & .form-id {
     margin-left: 0.5rem;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: ${colors.gray01};
   }
 `
