@@ -20,6 +20,9 @@ export default function useAlreadySelected({ itemId }: Props) {
     const currentSelectedOptions = resultDataItems[itemId]
     setIsAlreadySelected(currentSelectedOptions?.length > 0)
     selectedOptions.current = currentSelectedOptions
+
+    // 마운트 후 최초 확인
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {
