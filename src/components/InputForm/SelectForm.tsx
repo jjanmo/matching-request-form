@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState, useAppDispatch } from '@store/root'
+import { useAppDispatch } from '@store/root'
 import { Item as ResultItem } from '@store/slice/formSlice.type'
 import { resultActions } from '@store/slice/resultSlice'
-import { ResultDataType } from '@store/slice/resultSlice.type'
+import useAlreadySelected from '@hooks/useAlreadySelected'
 import DownArrow from '@components/Icons/DownArrow'
 import * as S from './Form.style'
 
 export default function SelectForm({ title, options, itemId }: ResultItem) {
   const dispatch = useAppDispatch()
-  const resultDataItems = useSelector<RootState, ResultDataType['items']>(
-    (state) => state.result.data.items,
-    shallowEqual
-  )
+  const { isAlreadySelected, selectedOptions } = useAlreadySelected({ itemId })
 
   const [selected, setSelected] = useState<string>('')
 
@@ -25,13 +21,12 @@ export default function SelectForm({ title, options, itemId }: ResultItem) {
   }
 
   useEffect(() => {
-    const currentSelectedOptions = resultDataItems[itemId]
-    if (currentSelectedOptions?.length > 0) {
-      const selectedOptionId = currentSelectedOptions[0]
-      const alreadySelectedOption = options.find((option) => option.id === selectedOptionId)!
-      setSelected(alreadySelectedOption.text)
+    if (isAlreadySelected) {
+      const selectedOptionId = selectedOptions.current[0]
+      const selectedOption = options.find((option) => option.id === selectedOptionId)!
+      setSelected(selectedOption.text)
     }
-  }, [])
+  }, [isAlreadySelected, options, selectedOptions])
 
   return (
     <S.Container>

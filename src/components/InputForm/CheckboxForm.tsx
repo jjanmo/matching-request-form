@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState, useAppDispatch } from '@store/root'
+import { useAppDispatch } from '@store/root'
 import { Item as ResultItem } from '@store/slice/formSlice.type'
 import { resultActions } from '@store/slice/resultSlice'
-import { ResultDataType } from '@store/slice/resultSlice.type'
+import useAlreadySelected from '@hooks/useAlreadySelected'
 import CheckIcon from '@components/Icons/Check'
 import * as S from './Form.style'
 
@@ -13,10 +12,7 @@ interface CheckedMap {
 
 export default function CheckboxForm({ title, options, itemId }: ResultItem) {
   const dispatch = useAppDispatch()
-  const resultDataItems = useSelector<RootState, ResultDataType['items']>(
-    (state) => state.result.data.items,
-    shallowEqual
-  )
+  const { isAlreadySelected, selectedOptions } = useAlreadySelected({ itemId })
 
   const initializedMap = options.reduce((acc, option) => ({ ...acc, [option.id]: false }), {})
   const [checkedMap, setCheckedMap] = useState<CheckedMap>(initializedMap)
@@ -32,15 +28,17 @@ export default function CheckboxForm({ title, options, itemId }: ResultItem) {
   }
 
   useEffect(() => {
-    const currentCheckedOptions = resultDataItems[itemId]
-    if (currentCheckedOptions?.length > 0) {
-      const alreadyCheckedOptions = currentCheckedOptions.reduce((acc, optionId) => ({ ...acc, [optionId]: true }), {})
+    if (isAlreadySelected) {
+      const alreadyCheckedOptions = selectedOptions.current.reduce(
+        (acc, optionId) => ({ ...acc, [optionId]: true }),
+        {}
+      )
       setCheckedMap((prev) => ({
         ...prev,
         ...alreadyCheckedOptions,
       }))
     }
-  }, [])
+  }, [isAlreadySelected, selectedOptions])
 
   return (
     <S.Container>
