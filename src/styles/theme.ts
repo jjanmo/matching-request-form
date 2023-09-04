@@ -7,4 +7,5 @@ export const colors = {
   green01: '#00c7ae',
   green02: '#C6F1EB',
   red: '#ff3131',
+  blue: '#4785ff',
 }

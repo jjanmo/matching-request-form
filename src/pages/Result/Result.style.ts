@@ -25,29 +25,18 @@ export const HomeLink = styled(Link)`
   border-radius: 0.5rem;
 `
 
-export const HomeButton = styled(HomeLink)`
+export const ButtonContainer = styled.div`
   position: absolute;
   top: 2rem;
-  right: 2rem;
-  width: fit-content;
-  padding: 0.2rem 0.6rem;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: ${colors.green01};
-  border-color: ${colors.green01};
-  border-width: 2px;
-  transition: 0.2s;
+  right: 1.5rem;
+  display: flex;
 
-  &:hover {
-    opacity: 0.7;
-  }
-  & svg {
-    transform: translateY(1px); // 미세조정
+  & > button + button {
+    margin-left: 1rem;
   }
 `
-
 export const Title = styled.h1`
-  margin: 0 auto 2rem;
+  margin: 2rem auto;
   font-size: 2.5rem;
   word-break: keep-all;
 

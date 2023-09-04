@@ -3,13 +3,22 @@ import { RootState } from '@store/root'
 import { FormDataType } from '@store/slice/formSlice.type'
 import { ResultDataType } from '@store/slice/resultSlice.type'
 import HomeIcon from '@components/Icons/Home'
+import DownloadIcon from '@components/Icons/Download'
 import { colors } from '@styles/theme'
 import * as CS from '../common.style'
 import * as S from './Result.style'
+import { IconButton } from '@components/Buttons'
+import { useNavigate } from 'react-router-dom'
 
 export default function Result() {
+  const navigate = useNavigate()
   const formData = useSelector<RootState, FormDataType | undefined>((state) => state.form.data)
   const resultData = useSelector<RootState, ResultDataType>((state) => state.result.data, shallowEqual)
+
+  const handleClickHome = () => {
+    navigate('/')
+  }
+  const handleClickDownload = () => {}
 
   if (!formData || !resultData) {
     return (
@@ -25,9 +34,18 @@ export default function Result() {
   return (
     <CS.Container>
       <CS.ContentWrapper>
-        <S.HomeButton to="/">
-          <HomeIcon size={20} fillColor={colors.green01} strokeColor={colors.green01} />
-        </S.HomeButton>
+        <S.ButtonContainer>
+          <IconButton
+            icon={<DownloadIcon size={20} fillColor={colors.blue} />}
+            onClick={handleClickDownload}
+            color={colors.blue}
+          />
+          <IconButton
+            icon={<HomeIcon size={20} fillColor={colors.green01} />}
+            onClick={handleClickHome}
+            color={colors.green01}
+          />
+        </S.ButtonContainer>
 
         <S.Title>
           <span>{formData?.title.slice(0, -2)}</span>
