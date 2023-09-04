@@ -1,7 +1,16 @@
+import { useEffect } from 'react'
+import { resultActions } from '@store/slice/resultSlice'
+import { useAppDispatch } from '@store/root'
 import Card, { CardType } from '@components/Card'
 import * as S from './Home.style'
 
 export default function Home() {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(resultActions.resetResultData())
+  }, [dispatch])
+
   return (
     <S.Container>
       <S.Title>견적 요청할 서비스를 선택하세요</S.Title>
