@@ -9,7 +9,7 @@ import useValid from '@hooks/useValid'
 import useWatch from '@hooks/useWatch'
 import Spinner from '@components/Icons/Spinner'
 import { CheckboxForm, SelectForm } from '@components/InputForm'
-import Button from '@components/Button'
+import { BottomButton } from '@components/Buttons'
 import * as CS from '../common.style'
 import * as S from './Form.style'
 
@@ -55,8 +55,8 @@ export default function Form() {
           {currentItem?.formType === 'checkbox' && <CheckboxForm key={currentItem.itemId} {...currentItem} />}
 
           <S.ButtonContainer>
-            {!isFirst && <Button onClick={handleClickPrev} text="이전" variant="outline" />}
-            <Button onClick={handleClickNext} text={isLast ? '제출하기' : '다음'} variant="fill" />
+            {!isFirst && <BottomButton onClick={handleClickPrev} text="이전" variant="outline" />}
+            <BottomButton onClick={handleClickNext} text={isLast ? '제출하기' : '다음'} variant="fill" />
           </S.ButtonContainer>
         </CS.ContentWrapper>
       )}
