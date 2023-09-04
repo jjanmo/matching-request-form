@@ -1,53 +1,46 @@
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { shallowEqual, useSelector } from 'react-redux'
 import { RootState } from '@store/root'
 import { FormDataType } from '@store/slice/formSlice.type'
 import { ResultDataType } from '@store/slice/resultSlice.type'
 import * as CS from '../common.style'
-import { resultActions } from '@store/slice/resultSlice'
-import { useEffect } from 'react'
+import * as S from './Result.style'
 
 export default function Result() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   const formData = useSelector<RootState, FormDataType | undefined>((state) => state.form.data)
   const resultData = useSelector<RootState, ResultDataType>((state) => state.result.data, shallowEqual)
-  const { formId, items: resultItems } = resultData
-
-  useEffect(() => {
-    return () => {
-      dispatch(resultActions.resetResultData())
-    }
-  }, [dispatch])
 
   if (!formData || !resultData) {
     return (
-      <div>
-        매칭 요청서를 먼저 작성해주세요!
-        <button onClick={() => navigate('/')}>홈</button>
-      </div>
+      <CS.Container>
+        <S.EmptyWrapper>
+          <S.EmptyNotice>매칭 요청서를 먼저 작성해주세요!</S.EmptyNotice>
+          <S.HomeLink to="/">홈으로 가기</S.HomeLink>
+        </S.EmptyWrapper>
+      </CS.Container>
     )
   }
 
   return (
     <CS.Container>
       <CS.ContentWrapper>
-        <button onClick={() => navigate('/')}>홈</button>
+        <S.HomeButton to="/">홈</S.HomeButton>
 
-        <h1>
-          <span>{formData?.title}</span>에 대한 제출서 <span>({formId})</span>
-        </h1>
-        {formData?.items.map((item) => (
-          <div key={item.itemId}>
-            <div>{item.title}</div>
-            <div>
-              {resultItems[item.itemId].map((optionId) => {
+        <S.Title>
+          <span>{formData?.title.slice(0, -2)}</span>
+          <span className="form-id">({resultData?.formId})</span>
+        </S.Title>
+
+        {formData?.items.map((item, index) => (
+          <S.Item key={item.itemId}>
+            <S.Question $isLeft={index % 2 === 0}>{item.title}</S.Question>
+            <S.SelectedOptions>
+              {resultData?.items[item.itemId].map((optionId) => {
                 const options = item.options
                 const selectedOption = options.find((option) => option.id === optionId)
-                return <span key={optionId}>{selectedOption?.text} </span>
+                return <S.Option key={optionId}>{selectedOption?.text} </S.Option>
               })}
-            </div>
-          </div>
+            </S.SelectedOptions>
+          </S.Item>
         ))}
       </CS.ContentWrapper>
     </CS.Container>

@@ -1,5 +1,5 @@
-import { colors } from '@styles/theme'
 import styled from 'styled-components'
+import { colors } from '@styles/theme'
 
 export const Container = styled.div`
   height: 100vh;
@@ -9,6 +9,7 @@ export const Container = styled.div`
   color: ${colors.black};
 `
 export const ContentWrapper = styled.div`
+  position: relative;
   width: 56rem;
   padding: 4rem;
   display: flex;
