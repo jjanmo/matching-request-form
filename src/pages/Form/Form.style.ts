@@ -2,6 +2,7 @@ import { ContentWrapper } from '@pages/common.style'
 import styled from 'styled-components'
 
 export const SpinnerWrapper = styled(ContentWrapper)`
+  height: 52rem;
   justify-content: center;
   align-items: center;
 `
