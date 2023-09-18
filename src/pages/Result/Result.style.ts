@@ -46,7 +46,7 @@ export const Title = styled.h1`
     color: ${colors.gray01};
   }
 `
-export const Question = styled.div<{ $isLeft: boolean }>`
+export const Question = styled.div`
   position: relative;
   padding: 1.5rem;
   margin-bottom: 3rem;

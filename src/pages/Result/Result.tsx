@@ -57,9 +57,9 @@ export default function Result() {
           <span className="form-id">(폼아이디 : {resultData?.formId})</span>
         </S.Title>
 
-        {formData?.items.map((item, index) => (
+        {formData?.items.map((item) => (
           <S.Item key={item.itemId}>
-            <S.Question $isLeft={index % 2 === 0}>{item.title}</S.Question>
+            <S.Question>{item.title}</S.Question>
             <S.SelectedOptions>
               {resultData?.items[item.itemId].map((optionId) => {
                 const options = item.options
